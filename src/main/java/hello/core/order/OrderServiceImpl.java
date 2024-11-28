@@ -6,6 +6,7 @@ import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,10 +26,16 @@ public class OrderServiceImpl implements OrderService{
     // 생성자를 실행할 때 딱 한 번 실행 -> 불변 필드
     // 생성자가 하나만 있을 경우 @Autowired 생략 가능
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = rateDiscountPolicy;
+//    }
 
 //    @Autowired
 //    public void setMemberRepository(MemberRepository memberRepository) {
@@ -36,7 +43,7 @@ public class OrderServiceImpl implements OrderService{
 //    }
 
 //    @Autowired
-//    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+//    public void setDiscountPolicy(@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
 //        this.discountPolicy = discountPolicy;
 //    }
 
